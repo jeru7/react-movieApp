@@ -9,6 +9,16 @@ import MovieDetails from './pages/MovieDetails/MovieDetails'
 import FavoritePage from './pages/Favorites/FavoritePage'
 
 function App() {
+  // const testFetch = async () => {
+  //   try {
+  //     const res = await fetchRecommendations()
+  //     console.log(res)
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
+
+  // testFetch()
   return (
     <BrowserRouter>
       <Navigator />
