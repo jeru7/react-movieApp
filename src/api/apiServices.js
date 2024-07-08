@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { API_KEY, ACCESS_TOKEN } from './apiConfig'
 
-export const fetchMostPopularMovie = async () => {
+export const fetchPopularMovies = async () => {
   try {
     const response = await axios.get(
       'https://api.themoviedb.org/3/movie/popular',

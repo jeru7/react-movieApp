@@ -8,22 +8,33 @@ import LandingPage from './pages/LandingPage/LandingPage'
 import MovieDetails from './pages/MovieDetails/MovieDetails'
 import FavoritePage from './pages/Favorites/FavoritePage'
 
-function App() {
-  // const testFetch = async () => {
-  //   try {
-  //     const res = await fetchRecommendations()
-  //     console.log(res)
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
+import { useState, useEffect } from 'react'
 
-  // testFetch()
+function App() {
+  const [showNav, setShowNav] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY
+      if (scrollPos > 0) {
+        setShowNav(true)
+      } else {
+        setShowNav(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <BrowserRouter>
-      <Navigator />
+      <Navigator showNav={showNav} />
       <Routes>
-        <Route path='/*' element={<LandingPage />} />
+        <Route path='/*' element={<LandingPage showNav={showNav} />} />
         <Route path='/details' element={<MovieDetails />} />
         <Route path='/favorites' element={<FavoritePage />} />
       </Routes>
