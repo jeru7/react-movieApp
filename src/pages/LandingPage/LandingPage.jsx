@@ -2,13 +2,9 @@ import Hero from './components/Hero'
 import Popular from './components/Popular'
 import TopRated from './components/TopRated'
 
-import { fetchPopularMovies, fetchTopRated } from '../../api/apiServices'
-
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
-  const [populars, setPopulars] = useState([])
-  const [topRated, setTopRated] = useState([])
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -32,21 +28,6 @@ const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
   }, [handleScrollChange])
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const populars = await fetchPopularMovies()
-        const topRated = await fetchTopRated()
-        setPopulars(populars.results)
-        setTopRated(topRated.results)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  useEffect(() => {
     setShowNav(false)
   }, [setShowNav])
 
@@ -56,9 +37,9 @@ const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
         ref={containerRef}
         className={`relative flex flex-col h-screen gap-2 overflow-y-auto snap-y snap-mandatory`}
       >
-        <Hero populars={populars} showNav={showNav} />
-        <Popular populars={populars} />
-        <TopRated topRated={topRated} />
+        <Hero showNav={showNav} />
+        <Popular />
+        <TopRated />
       </main>
     </div>
   )

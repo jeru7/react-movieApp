@@ -2,9 +2,35 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useEffect, useState } from 'react'
 
-const TopRated = ({ topRated }) => {
+import { fetchTopRatedMovies, fetchTopRatedTV } from '../../../api/apiServices'
+
+const TopRated = () => {
+  const [topRatedMovies, setTopRatedMovies] = useState([])
+  const [topRatedTV, setTopRatedTV] = useState([])
+  const [topRated, setTopRated] = useState(topRatedMovies)
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [slidesPerView, setSlidesPerView] = useState(0)
+
+  const [showMovies, setShowMovies] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const movie = await fetchTopRatedMovies()
+      const tvSeries = await fetchTopRatedTV()
+
+      setTopRatedMovies(movie.results)
+      setTopRatedTV(tvSeries.results)
+
+      if (showMovies) {
+        setTopRated(topRatedMovies)
+      } else {
+        setTopRated(topRatedTV)
+      }
+    }
+
+    fetchData()
+  }, [showMovies, topRatedMovies, topRatedTV])
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,28 +71,55 @@ const TopRated = ({ topRated }) => {
 
   return (
     <section className='flex flex-col h-screen shrink-0 snap-start'>
-      <h2 className='mx-2 mt-14 text-md sm:text-xl lg:text-2xl text-whiteText'>
-        Top Rated
-      </h2>
+      <div className='flex items-center justify-between mx-2 mt-14 text-md sm:text-xl lg:text-2xl text-whiteText'>
+        <h2 className=''>Top Rated</h2>
+        <div className='flex gap-4 text-sm'>
+          <p
+            className={`${
+              showMovies
+                ? 'text-muted underline'
+                : 'text-secondary hover:text-muted'
+            } cursor-pointer`}
+            onClick={() => {
+              setShowMovies(true)
+            }}
+          >
+            Movies
+          </p>
+          <p
+            className={`${
+              showMovies
+                ? 'text-secondary hover:text-muted'
+                : 'text-muted underline'
+            } cursor-pointer`}
+            onClick={() => {
+              setShowMovies(false)
+            }}
+          >
+            TV Series
+          </p>
+        </div>
+      </div>
       <div className='flex h-full'>
         <Swiper
           slidesPerView={slidesPerView}
           spaceBetween={8}
           className='flex w-full p-4'
         >
-          {topRated.map((movie) => (
+          {topRated.map((item) => (
             <SwiperSlide
-              key={movie.id}
+              key={item.id}
               className='flex flex-col h-full transition-transform transform cursor-pointer hover:scale-105'
             >
               <img
-                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                alt={movie.title}
+                src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                alt={showMovies ? item.title : item.original_name}
                 className='flex-1 object-cover rounded-xl'
+                loading='lazy'
               />
               <div className='absolute inset-0 bg-gradient-to-t from-[rgba(4,13,18,1)] via-[rgba(4,13,18,.4)] to-transparent rounded-xl'></div>
               <p className='absolute text-lg left-2 bottom-2 text-whiteText'>
-                {movie.title}
+                {showMovies ? item.title : item.original_name}
               </p>
             </SwiperSlide>
           ))}

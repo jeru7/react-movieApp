@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import SearchBar from '../../../reusable/Searchbar'
+import friendsImage from '../../../assets/friends.jpg'
 
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -11,9 +12,10 @@ const Hero = ({ populars, showNav }) => {
   }, [populars])
 
   const backgroundImageStyle = {
-    backgroundImage: mostPopular
-      ? `linear-gradient(0deg, rgba(4,13,18,1) 0%, rgba(4,13,18,0.3) 40%), url(https://image.tmdb.org/t/p/original/${mostPopular.backdrop_path})`
-      : 'none',
+    backgroundImage: `linear-gradient(180deg, rgba(4, 13, 18, 1), rgba(4, 13, 18, 0.4) 20%), linear-gradient(0deg, rgba(4, 13, 18, 1), rgba(4, 13, 18, 0.4) 20%), url(${friendsImage})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   }
 
   return (
