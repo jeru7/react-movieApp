@@ -8,10 +8,26 @@ import LandingPage from './pages/LandingPage/LandingPage'
 import MovieDetails from './pages/MovieDetails/MovieDetails'
 import FavoritePage from './pages/Favorites/FavoritePage'
 
+import { fetchPopularMovies } from './api/apiServices'
+
 import { useState, useEffect } from 'react'
 
 function App() {
   const [showNav, setShowNav] = useState(false)
+  const [populars, setPopulars] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetchPopularMovies()
+        setPopulars(res.results)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +50,10 @@ function App() {
     <BrowserRouter>
       <Navigator showNav={showNav} />
       <Routes>
-        <Route path='/*' element={<LandingPage showNav={showNav} />} />
+        <Route
+          path='/*'
+          element={<LandingPage showNav={showNav} populars={populars} />}
+        />
         <Route path='/details' element={<MovieDetails />} />
         <Route path='/favorites' element={<FavoritePage />} />
       </Routes>

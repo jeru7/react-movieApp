@@ -5,12 +5,12 @@ import { CSSTransition } from 'react-transition-group'
 
 import './Hero.css'
 
-const Hero = ({ data, showNav }) => {
+const Hero = ({ populars, showNav }) => {
   const [mostPopular, setMostPopular] = useState([])
 
   useEffect(() => {
-    if (data && data.length > 0) setMostPopular(data[0])
-  }, [data])
+    if (populars && populars.length > 0) setMostPopular(populars[0])
+  }, [populars])
 
   const backgroundImageStyle = {
     backgroundImage: mostPopular
@@ -26,24 +26,23 @@ const Hero = ({ data, showNav }) => {
         style={backgroundImageStyle}
       >
         <div
-          className='absolute w-full h-full bg-black opacity-40'
+          className='absolute w-full h-full bg-black opacity-40 '
           style={{ filter: 'blur(0.5px)' }}
         ></div>
-        {console.log(showNav)}
         <CSSTransition
           in={!showNav}
           timeout={300}
           classNames='hero'
           unmountOnExit
         >
-          <div className='absolute inset-0 flex flex-col items-center justify-center gap-1 text-white sm:gap-2 md:gap-3'>
+          <div className='absolute inset-0 flex flex-col items-center justify-center gap-1 text-white sm:gap-2 md:gap-3 '>
             <h1 className='text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl'>
               MovieApp
             </h1>
             <SearchBar />
           </div>
         </CSSTransition>
-        <h2 className='absolute opacity-50 text-md md:text-xl lg:bottom-12 md:left-8 bottom-8 left-4 text-whiteText'>
+        <h2 className='absolute opacity-50 text-md md:text-xl lg:bottom-12 md:left-8 bottom-8 left-4 text-muted'>
           {mostPopular.title}
         </h2>
       </section>

@@ -8,7 +8,7 @@ import { CSSTransition } from 'react-transition-group'
 const Navigator = ({ showNav }) => {
   return (
     <CSSTransition in={showNav} timeout={500} classNames='nav' unmountOnExit>
-      <nav className='fixed z-50 flex justify-between w-full p-2 opacity-75 bg-secondary text-whiteText'>
+      <nav className='fixed z-50 flex justify-between w-full p-2 opacity-75 bg-secondary text-whiteText hover:opacity-100'>
         <Link to='/' className='text-xl font-medium'>
           MovieApp
         </Link>
