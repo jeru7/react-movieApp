@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_KEY, ACCESS_TOKEN } from './apiConfig'
+import { ACCESS_TOKEN } from './apiConfig'
 
 export const fetchPopularMovies = async () => {
   try {
