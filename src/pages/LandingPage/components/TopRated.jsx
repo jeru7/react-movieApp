@@ -4,12 +4,11 @@ import { useEffect, useState } from 'react'
 
 import { fetchTopRatedMovies, fetchTopRatedTV } from '../../../api/apiServices'
 
-const TopRated = () => {
+const TopRated = ({ screenWidth, setScreenWidth }) => {
   const [topRatedMovies, setTopRatedMovies] = useState([])
   const [topRatedTV, setTopRatedTV] = useState([])
   const [topRated, setTopRated] = useState(topRatedMovies)
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const [slidesPerView, setSlidesPerView] = useState(0)
 
   const [showMovies, setShowMovies] = useState(true)
@@ -51,7 +50,7 @@ const TopRated = () => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [screenWidth])
+  }, [screenWidth, setScreenWidth])
 
   useEffect(() => {
     setSlidesPerView(computeSlidesPerView(screenWidth))
@@ -112,11 +111,12 @@ const TopRated = () => {
               className='flex flex-col h-full transition-transform transform cursor-pointer hover:scale-105'
             >
               <img
-                src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
                 alt={showMovies ? item.title : item.original_name}
                 className='flex-1 object-cover rounded-xl'
                 loading='lazy'
               />
+              <div className='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
               <div className='absolute inset-0 bg-gradient-to-t from-[rgba(4,13,18,1)] via-[rgba(4,13,18,.4)] to-transparent rounded-xl'></div>
               <p className='absolute text-lg left-2 bottom-2 text-whiteText'>
                 {showMovies ? item.title : item.original_name}

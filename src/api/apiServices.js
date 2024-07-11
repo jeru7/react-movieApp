@@ -158,6 +158,31 @@ export const fetchTVGenre = async () => {
   }
 }
 
+// search
+export const fetchSearchResults = async (searchValue) => {
+  try {
+    const response = await axios.get(
+      'https://api.themoviedb.org/3/search/multi',
+      {
+        params: {
+          query: `${searchValue}`,
+          include_adult: 'false',
+          language: 'en-US',
+          page: '1',
+        },
+        headers: {
+          accept: 'application/JSON',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    )
+
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 // extras
 export const fetchRecommendations = async (movieId) => {
   try {
