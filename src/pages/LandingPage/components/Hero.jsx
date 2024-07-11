@@ -38,7 +38,7 @@ const Hero = ({ populars, showNav }) => {
             key='hero-content'
           >
             <h1 className='text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl'>
-              MovieApp
+              CineBrowse
             </h1>
             <SearchBar />
           </motion.div>

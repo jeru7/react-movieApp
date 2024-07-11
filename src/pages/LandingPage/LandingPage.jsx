@@ -2,9 +2,15 @@ import Hero from './components/Hero'
 import Popular from './components/Popular'
 import TopRated from './components/TopRated'
 
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
+const LandingPage = ({
+  showNav,
+  handleScrollChange,
+  setShowNav,
+  setAbsolute,
+}) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -28,8 +34,24 @@ const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
   }, [handleScrollChange])
 
   useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [screenWidth])
+
+  useEffect(() => {
     setShowNav(false)
   }, [setShowNav])
+
+  useEffect(() => {
+    setAbsolute(true)
+  })
 
   return (
     <div className='relative flex flex-col w-full'>
@@ -39,7 +61,7 @@ const LandingPage = ({ showNav, handleScrollChange, setShowNav }) => {
       >
         <Hero showNav={showNav} />
         <Popular />
-        <TopRated />
+        <TopRated screenWidth={screenWidth} setScreenWidth={setScreenWidth} />
       </main>
     </div>
   )

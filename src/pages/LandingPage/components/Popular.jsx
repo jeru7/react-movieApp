@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import { motion, AnimatePresence } from 'framer-motion'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import {
   fetchPopularMovies,
@@ -15,6 +16,8 @@ const Popular = () => {
 
   const [showMovies, setShowMovies] = useState(true)
 
+  const swiperRef = useRef(null)
+
   useEffect(() => {
     const fetchData = async () => {
       const movies = await fetchPopularMovies()
@@ -22,15 +25,16 @@ const Popular = () => {
 
       setPopularMovies(movies.results)
       setPopularTV(tv.results)
-
-      if (showMovies) {
-        setPopulars(popularMovies)
-      } else {
-        setPopulars(popularTV)
-      }
     }
 
     fetchData()
+  }, [])
+
+  useEffect(() => {
+    setPopulars(showMovies ? popularMovies : popularTV)
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(0, 0)
+    }
   }, [showMovies, popularMovies, popularTV])
 
   return (
@@ -65,39 +69,49 @@ const Popular = () => {
         </div>
       </div>
       <div className='flex flex-1'>
-        <Swiper slidesPerView={1} className='w-full h-full'>
-          {populars.map((item) => (
-            <SwiperSlide
-              className='relative snap-x snap-mandatory'
-              key={item.id}
-            >
-              <div
-                className='w-full h-full snap-center'
-                style={{
-                  backgroundImage: `linear-gradient(0deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
+        <AnimatePresence key={showMovies}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className='w-full h-full'
+          >
+            <Swiper ref={swiperRef} slidesPerView={1} className='w-full h-full'>
+              {populars.map((item) => (
+                <SwiperSlide
+                  className='relative snap-x snap-mandatory'
+                  key={item.id}
+                >
+                  <div
+                    className='w-full h-full snap-center'
+                    style={{
+                      backgroundImage: `linear-gradient(0deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
                                     linear-gradient(90deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%), 
                                     linear-gradient(180deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
-                                    url(https://image.tmdb.org/t/p/original/${item.backdrop_path})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              ></div>
-              <div className='absolute inset-0 z-10 flex flex-col h-full gap-4 p-4 cursor-pointer lg:p-0 lg:left-24 top-8 lg:w-80 text-muted hover:text-whiteText'>
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${
-                    item.poster_path || item.backdrop_path
-                  }`}
-                  className='object-cover opacity-0 rounded-2xl lg:opacity-100 drop-shadow-xl h-4/5'
-                  loading='lazy'
-                ></img>
-                <p className='text-sm lg:text-2xl'>
-                  {showMovies ? item.title : item.original_name}
-                </p>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                                    url(https://image.tmdb.org/t/p/w1280/${item.backdrop_path})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  ></div>
+                  <div className='absolute inset-0 z-10 flex flex-col justify-end gap-4 p-4 cursor-pointer lg:justiyh-full lg:p-0 lg:left-24 lg:top-8 lg:w-80 text-muted hover:text-whiteText'>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${
+                        item.poster_path || item.backdrop_path
+                      }`}
+                      className='hidden object-cover lg:block rounded-2xl drop-shadow-xl h-4/5'
+                      loading='lazy'
+                    ></img>
+                    <p className='text-sm lg:text-2xl'>
+                      {showMovies ? item.title : item.original_name}
+                    </p>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   )

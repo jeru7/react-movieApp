@@ -1,13 +1,64 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleXmark, faSearch } from '@fortawesome/free-solid-svg-icons'
+
+import { fetchSearchResults } from '../api/apiServices'
+
+import { useNavigate } from 'react-router-dom'
+
+import { motion, AnimatePresence } from 'framer-motion'
+
+import { SearchContext } from '../context/SearchContext'
+
+import { useContext } from 'react'
+
 const SearchBar = () => {
+  const navigate = useNavigate()
+  const { searchValue, setSearchValue } = useContext(SearchContext)
+
+  const handleSearch = async () => {
+    if (!searchValue) return
+    try {
+      const searchResult = await fetchSearchResults(searchValue)
+      const searchResultData = searchResult.results
+
+      navigate(`/search/${encodeURIComponent(searchValue)}`, {
+        state: { searchResultData },
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
-    <div className='relative flex w-10/12 bg-black border rounded-md sm:w-96 bg-opacity-30 border-highlight2'>
+    <div className='relative flex items-center w-10/12 gap-2 bg-black border rounded-md sm:w-96 bg-opacity-30 border-highlight2'>
       <input
-        className='w-4/5 px-1 text-sm bg-transparent rounded-l-md'
-        placeholder='Search movie'
+        className='flex-1 px-1 text-sm bg-transparent outline-0 rounded-l-md'
+        placeholder='Search...'
         type='text'
-      ></input>
-      <button className='flex items-center justify-center w-1/5 px-2 py-2 text-xs border-l rounded-md bg-secondary border-l-highlight2'>
-        Search
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
+      <AnimatePresence>
+        {searchValue && (
+          <motion.div
+            key='icon'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className='cursor-pointer'
+          >
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              onClick={() => setSearchValue('')}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <button
+        className='flex px-4 py-2 text-lg border-l rounded-md items-centerw-auto bg-secondary border-l-highlight2'
+        onClick={handleSearch}
+      >
+        <FontAwesomeIcon icon={faSearch} />
       </button>
     </div>
   )
