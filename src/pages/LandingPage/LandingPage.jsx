@@ -2,7 +2,9 @@ import Hero from './components/Hero'
 import Popular from './components/Popular'
 import TopRated from './components/TopRated'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useContext } from 'react'
+
+import { SearchContext } from '../../context/SearchContext'
 
 const LandingPage = ({
   showNav,
@@ -10,8 +12,8 @@ const LandingPage = ({
   setShowNav,
   setAbsolute,
 }) => {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
   const containerRef = useRef(null)
+  const { setSearchValue } = useContext(SearchContext)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,24 +36,13 @@ const LandingPage = ({
   }, [handleScrollChange])
 
   useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth)
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [screenWidth])
-
-  useEffect(() => {
     setShowNav(false)
   }, [setShowNav])
 
   useEffect(() => {
+    setSearchValue('')
     setAbsolute(true)
-  })
+  }, [setSearchValue, setAbsolute])
 
   return (
     <div className='relative flex flex-col w-full'>
@@ -61,7 +52,7 @@ const LandingPage = ({
       >
         <Hero showNav={showNav} />
         <Popular />
-        <TopRated screenWidth={screenWidth} setScreenWidth={setScreenWidth} />
+        <TopRated />
       </main>
     </div>
   )

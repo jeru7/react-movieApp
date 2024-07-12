@@ -11,6 +11,7 @@ import FavoritePage from './pages/Favorites/FavoritePage'
 import { useState, useEffect } from 'react'
 
 import { SearchProvider } from './context/SearchContext'
+import { ScreenProvider } from './context/ScreenContext'
 
 import SearchResult from './pages/SearchResult/SearchResult'
 
@@ -29,30 +30,35 @@ function App() {
 
   return (
     <SearchProvider>
-      <BrowserRouter>
-        <Navigator showNav={showNav} absolute={absolute} />
-        <Routes>
-          <Route
-            path='/*'
-            element={
-              <LandingPage
-                showNav={showNav}
-                handleScrollChange={handleScrollChange}
-                setShowNav={setShowNav}
-                setAbsolute={setAbsolute}
-              />
-            }
-          />
-          <Route
-            path='/search/:query'
-            element={
-              <SearchResult setShowNav={setShowNav} setAbsolute={setAbsolute} />
-            }
-          />
-          <Route path='/details' element={<Details />} />
-          <Route path='/favorites' element={<FavoritePage />} />
-        </Routes>
-      </BrowserRouter>
+      <ScreenProvider>
+        <BrowserRouter>
+          <Navigator showNav={showNav} absolute={absolute} />
+          <Routes>
+            <Route
+              path='/*'
+              element={
+                <LandingPage
+                  showNav={showNav}
+                  handleScrollChange={handleScrollChange}
+                  setShowNav={setShowNav}
+                  setAbsolute={setAbsolute}
+                />
+              }
+            />
+            <Route
+              path='/search/:query'
+              element={
+                <SearchResult
+                  setShowNav={setShowNav}
+                  setAbsolute={setAbsolute}
+                />
+              }
+            />
+            <Route path='/details' element={<Details />} />
+            <Route path='/favorites' element={<FavoritePage />} />
+          </Routes>
+        </BrowserRouter>
+      </ScreenProvider>
     </SearchProvider>
   )
 }

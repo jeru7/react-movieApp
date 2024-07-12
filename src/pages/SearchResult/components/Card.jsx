@@ -1,3 +1,5 @@
+import imagePlaceholder from '../../../assets/imagePlaceholder.png'
+
 const Card = ({ data }) => {
   const getYear = (dateString) => {
     if (!dateString) return ''
@@ -9,7 +11,11 @@ const Card = ({ data }) => {
     <div className='flex flex-col items-center gap-2 pb-2 border-b cursor-pointer border-b-secondary sm:flex-row text-whiteText'>
       <div className='w-2/5 lg:w-[300px] lg:h-[350px]'>
         <img
-          src={`https://image.tmdb.org/t/p/w300/${data.poster_path}`}
+          src={
+            data.poster_path
+              ? `https://image.tmdb.org/t/p/w300/${data.poster_path}`
+              : imagePlaceholder
+          }
           alt={data.title || data.original_name}
           loading='lazy'
           className='w-full h-full rounded-xl'

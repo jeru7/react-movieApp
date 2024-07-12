@@ -13,13 +13,15 @@ import { useContext } from 'react'
 
 const SearchBar = () => {
   const navigate = useNavigate()
-  const { searchValue, setSearchValue } = useContext(SearchContext)
+  const { searchValue, setSearchValue, setLocalSearchValue } =
+    useContext(SearchContext)
 
   const handleSearch = async () => {
     if (!searchValue) return
     try {
       const searchResult = await fetchSearchResults(searchValue)
       const searchResultData = searchResult.results
+      setLocalSearchValue(searchValue)
 
       navigate(`/search/${encodeURIComponent(searchValue)}`, {
         state: { searchResultData },
@@ -28,6 +30,14 @@ const SearchBar = () => {
       console.log(e)
     }
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSearch()
+    }
+  }
+
   return (
     <div className='relative flex items-center w-10/12 gap-2 bg-black border rounded-md sm:w-96 bg-opacity-30 border-highlight2'>
       <input
@@ -36,6 +46,7 @@ const SearchBar = () => {
         type='text'
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
       <AnimatePresence>
         {searchValue && (
