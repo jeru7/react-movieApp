@@ -1,10 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
 import { fetchTopRatedMovies, fetchTopRatedTV } from '../../../api/apiServices'
 
-const TopRated = ({ screenWidth, setScreenWidth }) => {
+import { ScreenContext } from '../../../context/ScreenContext'
+
+const TopRated = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([])
   const [topRatedTV, setTopRatedTV] = useState([])
   const [topRated, setTopRated] = useState(topRatedMovies)
@@ -12,6 +14,8 @@ const TopRated = ({ screenWidth, setScreenWidth }) => {
   const [slidesPerView, setSlidesPerView] = useState(0)
 
   const [showMovies, setShowMovies] = useState(true)
+
+  const { screenWidth, setScreenWidth } = useContext(ScreenContext)
 
   useEffect(() => {
     const fetchData = async () => {

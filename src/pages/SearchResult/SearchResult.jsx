@@ -12,7 +12,7 @@ const SearchResult = ({ setShowNav, setAbsolute }) => {
   }, [setShowNav, setAbsolute])
 
   return (
-    <main className='flex p-4 text-whiteText'>
+    <main className='flex p-4 pt-24 text-whiteText'>
       <div className='flex flex-col w-full gap-2'>
         {searchResultData.map((item) => (
           <Card key={item.id} data={item} />
