@@ -12,8 +12,15 @@ const SearchResult = ({ setShowNav, setAbsolute }) => {
   }, [setShowNav, setAbsolute])
 
   return (
-    <main className='flex p-4 pt-24 text-whiteText'>
-      <div className='flex flex-col w-full gap-2'>
+    <main className='flex flex-col gap-2 p-4 pt-20 sm:pt-24 text-whiteText'>
+      <p className='w-full text-sm text-right text-muted'>
+        {searchResultData.length === 0
+          ? 'No result'
+          : searchResultData.length === 1
+          ? '1 result'
+          : `${searchResultData.length} results`}
+      </p>
+      <div className='grid w-full grid-cols-1 gap-y-2 sm:gap-x-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8'>
         {searchResultData.map((item) => (
           <Card key={item.id} data={item} />
         ))}
