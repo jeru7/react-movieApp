@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faBookmark } from '@fortawesome/free-solid-svg-icons'
 
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -37,8 +37,8 @@ const Navigator = ({ showNav, absolute }) => {
               CineBrowse
             </Link>
             <div className='flex items-center gap-5 text-2xl'>
-              <Link to='/favorites'>
-                <FontAwesomeIcon icon={faHeart} className='cursor-pointer' />
+              <Link to='/lists'>
+                <FontAwesomeIcon icon={faBookmark} className='cursor-pointer' />
               </Link>
               <AnimatePresence>
                 {screenWidth <= 768 ? (
