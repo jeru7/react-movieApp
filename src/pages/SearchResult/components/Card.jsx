@@ -1,6 +1,6 @@
 import imagePlaceholder from '../../../assets/imagePlaceholder.png'
 
-import { motion } from 'framer-motion'
+import AddButton from '../../../reusable/AddButton'
 
 const Card = ({ data }) => {
   const getYear = (dateString) => {
@@ -10,8 +10,8 @@ const Card = ({ data }) => {
   }
 
   return (
-    <div className='flex flex-col items-center w-full gap-1 pb-2 m-auto border-b cursor-pointer text-whiteText border-b-secondary sm:items-start'>
-      <motion.img
+    <div className='relative flex flex-col items-center w-full gap-1 pb-2 m-auto border-b cursor-pointer text-whiteText border-b-secondary sm:items-start group'>
+      <img
         src={
           data.poster_path
             ? `https://image.tmdb.org/t/p/w300/${data.poster_path}`
@@ -19,10 +19,9 @@ const Card = ({ data }) => {
         }
         alt={data.title || data.original_name}
         loading='lazy'
-        className='w-[200px] h-[300px] rounded-sm'
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3 }}
+        className='w-[200px] h-[300px] rounded-sm transition-opacity duration-300 group-hover:opacity-50'
       />
+      <AddButton />
       <div className='flex flex-col self-end w-full'>
         <h3 className='text-sm truncate'>{data.title || data.original_name}</h3>
         <p className='text-sm'>

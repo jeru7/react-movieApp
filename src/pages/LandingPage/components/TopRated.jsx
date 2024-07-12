@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from 'react'
 import { fetchTopRatedMovies, fetchTopRatedTV } from '../../../api/apiServices'
 
 import { ScreenContext } from '../../../context/ScreenContext'
+import AddButton from '../../../reusable/AddButton'
 
 const TopRated = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([])
@@ -48,6 +49,8 @@ const TopRated = () => {
         setSlidesPerView(5)
       }
     }
+
+    handleResize()
 
     window.addEventListener('resize', handleResize)
 
@@ -112,14 +115,15 @@ const TopRated = () => {
           {topRated.map((item) => (
             <SwiperSlide
               key={item.id}
-              className='flex flex-col h-full transition-transform transform cursor-pointer hover:scale-105'
+              className='flex flex-col h-full p-1 transition-transform transform cursor-pointer bg-primary group'
             >
               <img
                 src={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
                 alt={showMovies ? item.title : item.original_name}
-                className='flex-1 object-cover rounded-xl'
+                className='flex-1 object-cover transition-opacity duration-300 rounded-md group-hover:opacity-50'
                 loading='lazy'
               />
+              <AddButton item={item} />
               <div className='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
               <div className='absolute inset-0 bg-gradient-to-t from-[rgba(4,13,18,1)] via-[rgba(4,13,18,.4)] to-transparent rounded-xl'></div>
               <p className='absolute text-lg left-2 bottom-2 text-whiteText'>

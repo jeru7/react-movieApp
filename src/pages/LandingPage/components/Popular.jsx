@@ -8,6 +8,7 @@ import {
   fetchPopularMovies,
   fetchMostPopularTV,
 } from '../../../api/apiServices'
+import AddButton from '../../../reusable/AddButton'
 
 const Popular = () => {
   const [popularMovies, setPopularMovies] = useState([])
@@ -95,15 +96,18 @@ const Popular = () => {
                       backgroundPosition: 'center',
                     }}
                   ></div>
-                  <div className='absolute inset-0 z-10 flex flex-col justify-end gap-4 p-4 cursor-pointer lg:justiyh-full lg:p-0 lg:left-24 lg:top-8 lg:w-80 text-muted hover:text-whiteText'>
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500/${
-                        item.poster_path || item.backdrop_path
-                      }`}
-                      className='hidden object-cover lg:block rounded-2xl drop-shadow-xl h-4/5'
-                      loading='lazy'
-                    ></img>
-                    <p className='text-sm lg:text-2xl'>
+                  <div className='absolute inset-0 z-10 flex flex-col p-4 cursor-apointer lg:p-0 group lg:justiyh-full lg:left-24 lg:top-8 lg:w-80'>
+                    <div className='relative h-full'>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500/${
+                          item.poster_path || item.backdrop_path
+                        }`}
+                        className='hidden object-cover h-full transition-opacity duration-300 lg:block rounded-2xl drop-shadow-xl group-hover:opacity-80'
+                        loading='lazy'
+                      ></img>
+                      <AddButton item={item} />
+                    </div>
+                    <p className='text-sm lg:text-2xl text-muted group-hover:text-whiteText'>
                       {showMovies ? item.title : item.original_name}
                     </p>
                   </div>

@@ -138,26 +138,6 @@ export const fetchTopRatedTV = async () => {
   }
 }
 
-export const fetchTVGenre = async () => {
-  try {
-    const response = await axios.get(
-      'https://api.themoviedb.org/3/genre/tv/list',
-      {
-        params: {
-          language: 'en',
-        },
-        headers: {
-          accept: 'application/JSON',
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      }
-    )
-    return response.data
-  } catch (e) {
-    console.log(e)
-  }
-}
-
 // search
 export const fetchSearchResults = async (searchValue) => {
   try {
