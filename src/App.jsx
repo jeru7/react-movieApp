@@ -57,7 +57,15 @@ function App() {
                 }
               />
               <Route path='/details' element={<Details />} />
-              <Route path='/lists' element={<ListsPage />} />
+              <Route
+                path='/lists'
+                element={
+                  <ListsPage
+                    setShowNav={setShowNav}
+                    setAbsolute={setAbsolute}
+                  />
+                }
+              />
             </Routes>
           </BrowserRouter>
         </ListProvider>

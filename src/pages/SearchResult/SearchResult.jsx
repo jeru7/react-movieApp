@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import Card from './components/Card'
+import Card from '../../reusable/Card'
 
 const SearchResult = ({ setShowNav, setAbsolute }) => {
   const location = useLocation()
@@ -20,7 +20,7 @@ const SearchResult = ({ setShowNav, setAbsolute }) => {
           ? '1 result'
           : `${searchResultData.length} results`}
       </p>
-      <div className='grid w-full grid-cols-1 gap-y-2 sm:gap-x-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8'>
+      <div className='grid w-full grid-cols-2 gap-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8'>
         {searchResultData.map((item) => (
           <Card key={item.id} data={item} />
         ))}

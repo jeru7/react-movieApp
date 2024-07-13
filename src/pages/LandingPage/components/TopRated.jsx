@@ -126,7 +126,7 @@ const TopRated = () => {
               <AddButton item={item} />
               <div className='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
               <div className='absolute inset-0 bg-gradient-to-t from-[rgba(4,13,18,1)] via-[rgba(4,13,18,.4)] to-transparent rounded-xl'></div>
-              <p className='absolute text-lg left-2 bottom-2 text-whiteText'>
+              <p className='absolute w-5/6 text-lg truncate left-2 bottom-2 text-whiteText'>
                 {showMovies ? item.title : item.original_name}
               </p>
             </SwiperSlide>
