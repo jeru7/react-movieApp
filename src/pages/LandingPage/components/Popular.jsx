@@ -107,7 +107,7 @@ const Popular = () => {
                       ></img>
                       <AddButton item={item} />
                     </div>
-                    <p className='text-sm lg:text-2xl text-muted group-hover:text-whiteText'>
+                    <p className='text-sm truncate lg:text-2xl text-muted group-hover:text-whiteText'>
                       {showMovies ? item.title : item.original_name}
                     </p>
                   </div>

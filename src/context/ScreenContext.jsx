@@ -12,10 +12,12 @@ export const ScreenProvider = ({ children }) => {
 
     window.addEventListener('resize', handleResize)
 
+    handleResize()
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [screenWidth])
+  }, [])
 
   return (
     <ScreenContext.Provider value={{ screenWidth, setScreenWidth }}>
