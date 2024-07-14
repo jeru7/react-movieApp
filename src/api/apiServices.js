@@ -44,7 +44,7 @@ export const fetchTopRatedMovies = async () => {
   }
 }
 
-export const fetchMovieGenre = async () => {
+export const fetchMovieGenres = async () => {
   try {
     const response = await axios.get(
       'https://api.themoviedb.org/3/genre/movie/list',
@@ -94,6 +94,48 @@ export const fetchMovieTrailer = async (movieId) => {
   }
 }
 
+export const fetchMovieCharacters = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits`,
+      {
+        params: {
+          language: 'en-US',
+        },
+        headers: {
+          accept: 'applicattion/JSON',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    )
+
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const fetchMovieRecommendations = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/recommendations`,
+      {
+        params: {
+          language: 'en-US',
+          page: '1',
+        },
+        headers: {
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Accept: 'application/JSON',
+        },
+      }
+    )
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 // TV SERIES
 export const fetchMostPopularTV = async () => {
   try {
@@ -138,6 +180,27 @@ export const fetchTopRatedTV = async () => {
   }
 }
 
+export const fetchTVCharacters = async (tvSeriesId) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/tv/${tvSeriesId}/credits`,
+      {
+        params: {
+          language: 'en-US',
+        },
+        headers: {
+          accept: 'application/JSON',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    )
+
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 // search
 export const fetchSearchResults = async (searchValue) => {
   try {
@@ -163,22 +226,43 @@ export const fetchSearchResults = async (searchValue) => {
   }
 }
 
-// extras
-export const fetchRecommendations = async (movieId) => {
+export const fetchTVRecommendations = async (tvSeriesId) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/recommendations`,
+      `https://api.themoviedb.org/3/tv/${tvSeriesId}/recommendations`,
       {
         params: {
           language: 'en-US',
           page: '1',
         },
         headers: {
+          accept: 'application/JSON',
           Authorization: `Bearer ${ACCESS_TOKEN}`,
-          Accept: 'application/JSON',
         },
       }
     )
+
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const fetchTVGenres = async () => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/genre/tv/list`,
+      {
+        params: {
+          language: 'en-US',
+        },
+        headers: {
+          accept: 'application/JSON',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    )
+
     return response.data
   } catch (e) {
     console.log(e)

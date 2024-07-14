@@ -3,6 +3,7 @@ import 'swiper/css'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   fetchPopularMovies,
@@ -18,6 +19,14 @@ const Popular = () => {
   const [showMovies, setShowMovies] = useState(true)
 
   const swiperRef = useRef(null)
+
+  const navigate = useNavigate()
+
+  const handleCardClick = (item) => {
+    navigate(`/details/${item.title || item.name}`, {
+      state: item,
+    })
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,8 +90,9 @@ const Popular = () => {
             <Swiper ref={swiperRef} slidesPerView={1} className='w-full h-full'>
               {populars.map((item) => (
                 <SwiperSlide
-                  className='relative snap-x snap-mandatory'
+                  className='relative cursor-pointer snap-x snap-mandatory'
                   key={item.id}
+                  onClick={() => handleCardClick(item)}
                 >
                   <div
                     className='w-full h-full snap-center'
