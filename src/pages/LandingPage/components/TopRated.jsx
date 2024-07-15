@@ -116,7 +116,7 @@ const TopRated = () => {
               <img
                 src={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
                 alt={showMovies ? item.title : item.original_name}
-                className='h-[400px] w-full object-cover transition-opacity duration-300 rounded-md group-hover:opacity-50'
+                className='h-[450px] w-full object-cover transition-opacity duration-300 rounded-md group-hover:opacity-50'
                 loading='lazy'
               />
               <AddButton item={item} />
