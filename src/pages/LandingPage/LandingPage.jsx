@@ -5,6 +5,7 @@ import TopRated from './components/TopRated'
 import { useEffect, useRef, useContext } from 'react'
 
 import { SearchContext } from '../../context/SearchContext'
+import Footer from '../../reusable/Footer'
 
 const LandingPage = ({
   showNav,
@@ -53,6 +54,7 @@ const LandingPage = ({
         <Hero showNav={showNav} />
         <Popular />
         <TopRated />
+        <Footer />
       </main>
     </div>
   )
