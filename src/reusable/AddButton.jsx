@@ -7,7 +7,8 @@ import { useLists } from '../context/ListContext'
 const AddButton = ({ item }) => {
   const { addToList, removeFromList, isOnList } = useLists()
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation()
     if (isOnList(item.id)) {
       removeFromList(item.id)
     } else {
