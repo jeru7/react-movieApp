@@ -57,7 +57,7 @@ const TopRated = () => {
       } else if (screenWidth >= 1000 && screenWidth <= 1280) {
         setSlidesPerView(5)
       } else {
-        setSlidesPerView(7)
+        setSlidesPerView(6)
       }
     }
 
@@ -104,7 +104,7 @@ const TopRated = () => {
       <div className='flex h-full'>
         <Swiper
           slidesPerView={slidesPerView}
-          spaceBetween={8}
+          spaceBetween={4}
           className='flex w-full p-4'
         >
           {topRated.map((item) => (

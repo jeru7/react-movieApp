@@ -11,7 +11,6 @@ import {
   fetchPopularMovies,
   fetchMostPopularTV,
 } from '../../../api/apiServices'
-import AddButton from '../../../reusable/AddButton'
 
 const Popular = () => {
   const [popularMovies, setPopularMovies] = useState([])

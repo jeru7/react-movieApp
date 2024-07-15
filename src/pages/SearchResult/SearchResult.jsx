@@ -28,7 +28,6 @@ const SearchResult = ({ setShowNav, setAbsolute }) => {
           ))}
         </div>
       </main>
-      <Footer />
     </>
   )
 }

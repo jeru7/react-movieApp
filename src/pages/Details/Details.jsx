@@ -84,7 +84,7 @@ const Details = ({ setShowNav, setAbsolute }) => {
         setSlidesPerViewDetails(5)
       } else {
         setSlidesPerViewCast(7)
-        setSlidesPerViewDetails(7)
+        setSlidesPerViewDetails(6)
       }
     }
 
