@@ -276,7 +276,7 @@ const Details = ({ setShowNav, setAbsolute }) => {
                     imagePlaceholder
                   }
                   alt={`Poster of ${item.title || item.name}`}
-                  className='w-full h-[400px] transition-opacity duration-300 rounded-md group-hover:opacity-50'
+                  className='w-full h-[450px] transition-opacity duration-300 rounded-md group-hover:opacity-50'
                   loading='lazy'
                 />
                 <AddButton item={item} />

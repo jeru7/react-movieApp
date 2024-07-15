@@ -115,10 +115,9 @@ const Popular = () => {
                           src={`https://image.tmdb.org/t/p/w500/${
                             item.poster_path || item.backdrop_path
                           }`}
-                          className='hidden object-cover h-full transition-opacity duration-300 lg:block rounded-2xl drop-shadow-xl group-hover:opacity-80'
+                          className='hidden object-cover transition-opacity duration-300 lg:h-full lg:block rounded-2xl drop-shadow-xl group-hover:opacity-80'
                           loading='lazy'
                         ></img>
-                        <AddButton item={item} />
                       </div>
                       <p
                         className='text-sm truncate lg:text-2xl text-muted group-hover:text-whiteText'
