@@ -80,8 +80,9 @@ export const fetchMovieTrailer = async (movieId) => {
       }
     )
 
+    const trailerTypes = ['Trailer', 'Clip']
     const trailers = response.data.results.filter(
-      (video) => video.type === 'Trailer' && video.site === 'Youtube'
+      (video) => trailerTypes.includes(video.type) && video.site === 'YouTube'
     )
 
     if (trailers.length > 0) {
@@ -264,6 +265,33 @@ export const fetchTVGenres = async () => {
     )
 
     return response.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const fetchTVTrailer = async (tvSeriesId) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/tv/${tvSeriesId}/videos?language=en-US`,
+      {
+        headers: {
+          accept: 'application/JSON',
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    )
+
+    const trailerTypes = ['Trailer', 'Clip']
+    const trailers = response.data.results.filter(
+      (video) => trailerTypes.includes(video.type) && video.site === 'YouTube'
+    )
+
+    if (trailers.length > 0) {
+      const trailer = trailers[0]
+      const trailerUrl = `https://www.youtube.com/watch=?v=${trailer.key}`
+      return trailerUrl
+    }
   } catch (e) {
     console.log(e)
   }
