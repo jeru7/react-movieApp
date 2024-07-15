@@ -27,6 +27,7 @@ import { motion } from 'framer-motion'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import Footer from '../../reusable/Footer'
 
 const Details = ({ setShowNav, setAbsolute }) => {
   const location = useLocation()
@@ -288,6 +289,7 @@ const Details = ({ setShowNav, setAbsolute }) => {
           ))}
         </Swiper>
       </section>
+      <Footer />
     </motion.div>
   )
 }
