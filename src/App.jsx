@@ -5,7 +5,7 @@ import Navigator from './layout/Navigator'
 
 import LandingPage from './pages/LandingPage/LandingPage'
 
-import Details from './pages/Details/Details'
+import Details from './pages/Details/Details.jsx'
 import ListsPage from './pages/Lists/ListsPage'
 
 import { useState, useEffect } from 'react'
@@ -56,7 +56,12 @@ function App() {
                   />
                 }
               />
-              <Route path='/details' element={<Details />} />
+              <Route
+                path='/details/:title'
+                element={
+                  <Details setShowNav={setShowNav} setAbsolute={setAbsolute} />
+                }
+              />
               <Route
                 path='/lists'
                 element={

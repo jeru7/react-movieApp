@@ -1,8 +1,18 @@
 import imagePlaceholder from '../assets/imagePlaceholder.png'
 
+import { useNavigate } from 'react-router-dom'
+
 import AddButton from './AddButton'
 
 const Card = ({ data }) => {
+  const navigate = useNavigate()
+
+  const handleCardClick = (item) => {
+    navigate(`/details/${item.title || item.name}`, {
+      state: item,
+    })
+  }
+
   const getYear = (dateString) => {
     if (!dateString) return ''
     const date = new Date(dateString)
@@ -10,7 +20,10 @@ const Card = ({ data }) => {
   }
 
   return (
-    <div className='relative flex flex-col items-center w-full gap-1 pb-2 m-auto border-b cursor-pointer md:w-full text-whiteText border-b-secondary sm:items-start group'>
+    <div
+      className='relative flex flex-col items-center w-full gap-1 pb-2 m-auto border-b cursor-pointer md:w-full text-whiteText border-b-secondary sm:items-start group'
+      onClick={() => handleCardClick(data)}
+    >
       <img
         src={
           data.poster_path

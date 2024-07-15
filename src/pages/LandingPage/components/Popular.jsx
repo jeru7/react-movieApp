@@ -3,6 +3,9 @@ import 'swiper/css'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import LazyLoad from 'react-lazy-load'
 
 import {
   fetchPopularMovies,
@@ -18,6 +21,14 @@ const Popular = () => {
   const [showMovies, setShowMovies] = useState(true)
 
   const swiperRef = useRef(null)
+
+  const navigate = useNavigate()
+
+  const handleCardClick = (item) => {
+    navigate(`/details/${item.title || item.name}`, {
+      state: item,
+    })
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,38 +91,44 @@ const Popular = () => {
           >
             <Swiper ref={swiperRef} slidesPerView={1} className='w-full h-full'>
               {populars.map((item) => (
-                <SwiperSlide
-                  className='relative snap-x snap-mandatory'
-                  key={item.id}
-                >
-                  <div
-                    className='w-full h-full snap-center'
-                    style={{
-                      backgroundImage: `linear-gradient(0deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
+                <LazyLoad key={item.id}>
+                  <SwiperSlide
+                    className='relative cursor-pointer snap-x snap-mandatory'
+                    key={item.id}
+                    onClick={() => handleCardClick(item)}
+                  >
+                    <div
+                      className='w-full h-full snap-center'
+                      style={{
+                        backgroundImage: `linear-gradient(0deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
                                     linear-gradient(90deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%), 
                                     linear-gradient(180deg, rgba(4,13,18,1) 0, rgba(4,13,18,0.3) 20%),
                                     url(https://image.tmdb.org/t/p/w1280/${item.backdrop_path})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  ></div>
-                  <div className='absolute inset-0 z-10 flex flex-col p-4 cursor-apointer lg:p-0 group lg:justiyh-full lg:left-24 lg:top-8 lg:w-80'>
-                    <div className='relative h-full'>
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500/${
-                          item.poster_path || item.backdrop_path
-                        }`}
-                        className='hidden object-cover h-full transition-opacity duration-300 lg:block rounded-2xl drop-shadow-xl group-hover:opacity-80'
-                        loading='lazy'
-                      ></img>
-                      <AddButton item={item} />
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
+                    ></div>
+                    <div className='absolute inset-0 z-10 flex flex-col p-4 cursor-apointer lg:p-0 group lg:justiyh-full lg:left-24 lg:top-8 lg:w-80'>
+                      <div className='relative h-full'>
+                        <img
+                          src={`https://image.tmdb.org/t/p/w500/${
+                            item.poster_path || item.backdrop_path
+                          }`}
+                          className='hidden object-cover h-full transition-opacity duration-300 lg:block rounded-2xl drop-shadow-xl group-hover:opacity-80'
+                          loading='lazy'
+                        ></img>
+                        <AddButton item={item} />
+                      </div>
+                      <p
+                        className='text-sm truncate lg:text-2xl text-muted group-hover:text-whiteText'
+                        onClick={() => handleCardClick(item)}
+                      >
+                        {showMovies ? item.title : item.original_name}
+                      </p>
                     </div>
-                    <p className='text-sm truncate lg:text-2xl text-muted group-hover:text-whiteText'>
-                      {showMovies ? item.title : item.original_name}
-                    </p>
-                  </div>
-                </SwiperSlide>
+                  </SwiperSlide>
+                </LazyLoad>
               ))}
             </Swiper>
           </motion.div>
