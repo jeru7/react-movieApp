@@ -5,6 +5,15 @@ export const SearchContext = createContext()
 export const SearchProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('')
   const [localSearchValue, setLocalSearchValue] = useState('')
+  const [openSearch, setOpenSearch] = useState(false)
+
+  const openSearchClick = () => {
+    setOpenSearch(true)
+  }
+
+  const closeSearch = () => {
+    setOpenSearch(false)
+  }
 
   return (
     <SearchContext.Provider
@@ -13,6 +22,9 @@ export const SearchProvider = ({ children }) => {
         setSearchValue,
         localSearchValue,
         setLocalSearchValue,
+        openSearch,
+        openSearchClick,
+        closeSearch,
       }}
     >
       {children}

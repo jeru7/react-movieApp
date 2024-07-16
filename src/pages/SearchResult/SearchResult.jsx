@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Card from '../../reusable/Card'
-import Footer from '../../reusable/Footer'
 
 const SearchResult = ({ setShowNav, setAbsolute }) => {
   const location = useLocation()
