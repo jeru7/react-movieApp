@@ -13,7 +13,7 @@ import { useContext } from 'react'
 
 const SearchBar = () => {
   const navigate = useNavigate()
-  const { searchValue, setSearchValue, setLocalSearchValue } =
+  const { searchValue, setSearchValue, setLocalSearchValue, closeSearch } =
     useContext(SearchContext)
 
   const handleSearch = async () => {
@@ -22,6 +22,7 @@ const SearchBar = () => {
       const searchResult = await fetchSearchResults(searchValue)
       const searchResultData = searchResult.results
       setLocalSearchValue(searchValue)
+      closeSearch()
 
       navigate(`/search/${encodeURIComponent(searchValue)}`, {
         state: { searchResultData },
